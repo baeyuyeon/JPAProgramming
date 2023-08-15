@@ -10,15 +10,20 @@ import javax.persistence.Lob;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.UniqueConstraint;
 
 @Entity
-@Table(name = "member")
+@Table(name = "member", uniqueConstraints = {@UniqueConstraint(
+        name = "NAME_AGE_UNIQUE",
+        columnNames = {"NAME", "AGE"}
+)})
 public class Member {
 
     @Id
     @Column(name = "id")
     private String id;
-    @Column(name = "name")
+
+    @Column(name = "name", nullable = false, length = 10)
     private String username;
     private Integer age; // 생략해도 매핑됨.
 

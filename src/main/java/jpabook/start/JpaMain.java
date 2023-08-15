@@ -19,6 +19,7 @@ public class JpaMain {
         try {
             tx.begin();
             logic(em);
+            logic2(em);
             tx.commit();
         } catch (Exception e) {
             tx.rollback();
@@ -54,5 +55,11 @@ public class JpaMain {
         //삭제
         em.remove(member);
 
+    }
+
+    private static void logic2(EntityManager em) {
+        Board board = new Board();
+        em.persist(board);
+        System.out.println("board.id = " + board.getId());
     }
 }
