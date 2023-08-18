@@ -21,9 +21,10 @@ public class JpaMain {
             //logic(em);
             //logic2(em);
             testSave(em);
-            queryLogicJoin(em);
+            /*queryLogicJoin(em);
             updateRelation(em);
-            deleteRelation(em);
+            deleteRelation(em);*/
+            bindDirection(em);
             tx.commit();
         } catch (Exception e) {
             tx.rollback();
@@ -111,4 +112,14 @@ public class JpaMain {
         Team team1 = em.find(Team.class, "team1");
         em.remove(team1);
     }
+
+
+    public static void bindDirection(EntityManager em) {
+        Team team = em.find(Team.class, "team1");
+        List<Member> members = team.getMembers();// (팀 -> 회원), 객체 그래프 탐색
+        for (Member member : members) {
+            System.out.println("member.username = " + member.getUsername());
+        }
+    }
+
 }
