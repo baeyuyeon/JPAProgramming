@@ -20,11 +20,13 @@ public class JpaMain {
             tx.begin();
             //logic(em);
             //logic2(em);
-            testSave(em);
+            //testSave(em);
             /*queryLogicJoin(em);
             updateRelation(em);
             deleteRelation(em);*/
-            bindDirection(em);
+            //bindDirection(em);
+            //testSaveNonOwner(em);
+            testORM_양방향(em);
             tx.commit();
         } catch (Exception e) {
             tx.rollback();
@@ -122,4 +124,42 @@ public class JpaMain {
         }
     }
 
+
+    //주인이 아닌곳에 연관관계 설정하면? 외래키저장 X
+    public static void testSaveNonOwner(EntityManager em) {
+        //회원1 저장
+        Member member1 = new Member("member1", "회원1");
+        em.persist(member1);
+
+        //회원2 저장
+        Member member2 = new Member("member2", "회원2");
+        em.persist(member2);
+
+        Team team1 = new Team("team1", "팀1");
+        //주인이 아닌 곳만 연관관계 설정
+        team1.getMembers().add(member1);
+        team1.getMembers().add(member2);
+
+        em.persist(team1);
+
+    }
+
+    public static void testORM_양방향(EntityManager em) {
+        //팀 1 저장
+        Team team1 = new Team("team1", "팀1");
+        em.persist(team1);
+
+        Member member1 = new Member("member1", "회원1");
+
+        //양방향 연관관계 설정
+        member1.setTeam(team1);
+        em.persist(member1);
+
+        Member member2 = new Member("member2", "회원2");
+
+        //양방향 연관관계 설정
+        member2.setTeam(team1);
+        em.persist(member2);
+
+    }
 }

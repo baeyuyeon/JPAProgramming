@@ -59,7 +59,14 @@ public class Member {
     }
 
     public void setTeam(Team team) {
+
+        //기존 팀과 관계를 제거
+        if (this.team != null) {
+            this.team.getMembers().remove(this);
+        }
+        
         this.team = team;
+        team.getMembers().add(this);
     }
 
     public RoleType getRoleType() {
