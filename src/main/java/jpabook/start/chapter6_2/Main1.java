@@ -1,4 +1,4 @@
-package jpabook.start.chapter6;
+package jpabook.start.chapter6_2;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
