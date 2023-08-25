@@ -49,4 +49,9 @@ public class Member4 {
     public void setProducts(List<Product> products) {
         this.products = products;
     }
+
+    public void addProduct(Product product) {
+        products.add(product);
+        product.getMembers().add(this);
+    }
 }
