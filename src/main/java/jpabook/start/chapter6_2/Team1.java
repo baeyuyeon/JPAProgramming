@@ -27,6 +27,10 @@ public class Team1 {
         this.name = name;
     }
 
+    public Team1() {
+        
+    }
+
     public Long getId() {
         return id;
     }

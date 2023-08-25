@@ -18,6 +18,10 @@ public class Member1 {
         this.username = username;
     }
 
+    public Member1() {
+
+    }
+
     public Long getId() {
         return id;
     }
