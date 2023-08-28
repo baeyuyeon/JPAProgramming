@@ -2,7 +2,6 @@
 <persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence" version="2.1">
 
   <persistence-unit name="jpabook">
-
     <properties>
 
       <!-- 필수 속성 -->
@@ -23,6 +22,8 @@
         value="org.hibernate.cfg.ImprovedNamingStrategy"/>
 
     </properties>
+
   </persistence-unit>
+
 
 </persistence>
