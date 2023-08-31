@@ -17,7 +17,11 @@ public class Main8_4 {
 
         try {
             tx.begin();
-            saveWithCascade(em);
+            Long id = saveWithCascade(em);
+            tx.commit();
+            em.clear();
+            tx.begin();
+            remove(em, id);
             tx.commit();
         } catch (Exception e) {
             tx.rollback();
@@ -27,7 +31,13 @@ public class Main8_4 {
         emf.close();
     }
 
-    private static void saveWithCascade(EntityManager em) {
+    private static void remove(EntityManager em, Long id) {
+        Parent8_4 findParent = em.find(Parent8_4.class, id);
+        System.out.println("findParent = " + findParent.getId());
+        findParent.getChildren().remove(0);
+    }
+
+    private static Long saveWithCascade(EntityManager em) {
         Child8_4 child1 = new Child8_4();
         Child8_4 child2 = new Child8_4();
 
@@ -39,5 +49,7 @@ public class Main8_4 {
         parent.getChildren().add(child2);
 
         em.persist(parent);
+
+        return parent.getId();
     }
 }
