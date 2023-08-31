@@ -18,7 +18,7 @@ public class JpaMain {
 
         try {
             tx.begin();
-            //logic(em);
+            logic(em);
             //logic2(em);
             //testSave(em);
             /*queryLogicJoin(em);
@@ -26,7 +26,7 @@ public class JpaMain {
             deleteRelation(em);*/
             //bindDirection(em);
             //testSaveNonOwner(em);
-            testORM_양방향(em);
+            //testORM_양방향(em);
             tx.commit();
         } catch (Exception e) {
             tx.rollback();
