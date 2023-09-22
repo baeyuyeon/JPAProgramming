@@ -34,12 +34,27 @@ public class Main10_2_7 {
     }
 
     private static void getMemberData(EntityManager em) {
-        Team10_2_7 team10_2_7 = em.find(Team10_2_7.class, "team1");
-        System.out.println("team10_2_7 = " + team10_2_7);
+
         String jpql = "select t from Team10_2_7 t join t.members where t.name='팀A'";
 
         List<Team10_2_7> resultList = em.createQuery(jpql, Team10_2_7.class).getResultList();
         resultList.stream().forEach(a -> System.out.println("team = " + a));
+        System.out.println("---------------------------");
+       /* List<Member10_2_7> resultMemberList = em.createQuery(jpql, Member10_2_7.class)
+                .getResultList();
+        System.out.println("아예안가져올꺼야...? :: " + resultMemberList.size());
+        resultMemberList.stream().forEach(a -> System.out.println("member = " + a));*/
+
+        //패치 조인
+        String fetchJoin = "select t from Team10_2_7 t join fetch t.members where t.name='팀A'";
+        List<Team10_2_7> resultListFetch = em.createQuery(fetchJoin, Team10_2_7.class)
+                .getResultList();
+        resultListFetch.stream().forEach(a -> System.out.println("team = " + a));
+
+        List<Member10_2_7> resultMemberList = em.createQuery(fetchJoin, Member10_2_7.class)
+                .getResultList();
+        System.out.println("아예안가져올꺼야...? :: " + resultMemberList.size());
+        resultMemberList.stream().forEach(a -> System.out.println("member = " + a));
     }
 
     private static void save(EntityManager em) {

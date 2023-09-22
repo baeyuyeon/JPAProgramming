@@ -2,7 +2,6 @@ package jpabook.start.chapter10_2_7;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -15,7 +14,7 @@ public class Member10_2_7 {
     private String id;
     private String username;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "TEAM_ID")
     private Team10_2_7 team;
 
@@ -49,5 +48,14 @@ public class Member10_2_7 {
 
     public void setTeam(Team10_2_7 team) {
         this.team = team;
+    }
+
+    @Override
+    public String toString() {
+        return "Member10_2_7{" +
+                "id='" + id + '\'' +
+                ", username='" + username + '\'' +
+                ", team=" + team +
+                '}';
     }
 }
