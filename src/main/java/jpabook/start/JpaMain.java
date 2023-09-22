@@ -55,7 +55,7 @@ public class JpaMain {
                 "findMember = " + findMember.getUsername() + ", age = " + findMember.getAge());
 
         //목록 조회
-        List<Member> members = em.createQuery("select m from Member m", Member.class)
+        List<Member> members = em.createQuery("select m from Member10_2_7 m", Member.class)
                 .getResultList();
         System.out.println("member.size = " + members.size());
 
@@ -87,7 +87,7 @@ public class JpaMain {
     }
 
     private static void queryLogicJoin(EntityManager em) {
-        String jpql = "select m from Member m join m.team t where " + "t.name=:teamName";
+        String jpql = "select m from Member10_2_7 m join m.team t where " + "t.name=:teamName";
         List<Member> resultList = em.createQuery(jpql, Member.class)
                 .setParameter("teamName", "팀1")
                 .getResultList();
