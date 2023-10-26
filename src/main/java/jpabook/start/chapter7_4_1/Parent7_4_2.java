@@ -21,7 +21,7 @@ public class Parent7_4_2 {
     private String name;
 
     @OneToMany
-    @JoinTable(name = "PARENT_CHILD",
+    @JoinTable(name = "PARENT_CHILD_2",
             joinColumns = @JoinColumn(name = "PARENT_ID"),
             inverseJoinColumns = @JoinColumn(name = "CHILD_ID"))
     private List<Child7_4_2> child = new ArrayList<>();
