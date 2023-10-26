@@ -1,7 +1,6 @@
 package jpabook.start.chapter7_1_1;
 
 import javax.persistence.Column;
-import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -10,7 +9,7 @@ import javax.persistence.InheritanceType;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED) // 조인전략 사용
-@DiscriminatorColumn(name = "DTYPE") // DTYPE 은 default라서 생략 가능
+//@DiscriminatorColumn(name = "DTYPE") // DTYPE 은 default라서 생략 가능
 public class Item {
 
     @Id

@@ -18,7 +18,7 @@ public class Main4 {
             tx.commit();
             em.clear();
             find(em, memberId);
-            findInverse(em);
+            // findInverse(em);
 
         } catch (Exception e) {
             tx.rollback();

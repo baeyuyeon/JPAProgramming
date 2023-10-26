@@ -18,8 +18,8 @@ public class JpaMain {
 
         try {
             tx.begin();
-            logic(em);
-            //logic2(em);
+            //logic(em);
+            logic2(em);
             //testSave(em);
             /*queryLogicJoin(em);
             updateRelation(em);
