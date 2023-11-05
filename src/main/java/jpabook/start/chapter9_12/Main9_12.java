@@ -22,13 +22,13 @@ public class Main9_12 {
             save(em);
             tx.commit();
             em.clear();
-            /*tx.begin();
+            tx.begin();
             getMemberData(em);
             tx.commit();
-            em.clear();*/
-            tx.begin();
+            em.clear();
+            /*tx.begin();
             update(em);
-            tx.commit();
+            tx.commit();*/
         } catch (Exception e) {
             tx.rollback();
         } finally {
