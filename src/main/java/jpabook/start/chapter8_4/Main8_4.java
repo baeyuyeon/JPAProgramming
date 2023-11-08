@@ -1,5 +1,6 @@
 package jpabook.start.chapter8_4;
 
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
@@ -34,7 +35,14 @@ public class Main8_4 {
     private static void remove(EntityManager em, Long id) {
         Parent8_4 findParent = em.find(Parent8_4.class, id);
         System.out.println("findParent = " + findParent.getId());
+        List<Child8_4> children = findParent.getChildren();
+        children.get(0).setParent(null);
+        children.get(1).setParent(null);
+
         findParent.getChildren().remove(0);
+
+        //em.remove(findParent);
+
     }
 
     private static Long saveWithCascade(EntityManager em) {

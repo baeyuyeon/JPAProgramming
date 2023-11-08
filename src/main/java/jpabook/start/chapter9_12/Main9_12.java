@@ -22,13 +22,13 @@ public class Main9_12 {
             save(em);
             tx.commit();
             em.clear();
-            tx.begin();
+            /*tx.begin();
             getMemberData(em);
             tx.commit();
-            em.clear();
-            /*tx.begin();
+            em.clear();*/
+            tx.begin();
             update(em);
-            tx.commit();*/
+            tx.commit();
         } catch (Exception e) {
             tx.rollback();
         } finally {
@@ -89,7 +89,9 @@ public class Main9_12 {
         List<Address> addressHistory = member.getAddressHistory();
         addressHistory.remove(new Address("서울", "강남", "02-1111-2222"));
         addressHistory.add(new Address("서울", "신도림", "02-1111-2222"));
-
+        
+        //Address get강남ddress = addressHistory.get(0);
+        //get강남ddress.
 
     }
 }

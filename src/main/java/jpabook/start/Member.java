@@ -41,7 +41,7 @@ public class Member {
     @Lob
     private String description;
 
-    @ManyToOne
+    @ManyToOne//(fetch = FetchType.EAGER)
     @JoinColumn(name = "TEAM_ID")
     private Team team;
 

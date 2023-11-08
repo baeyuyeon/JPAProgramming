@@ -5,6 +5,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
+import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -26,7 +27,8 @@ public class Main10_1 {
             em.clear();
             tx.begin();
             //getMemberData(em);
-            getMemberDataUseCriteria(em);
+            //getMemberDataUseCriteria(em);
+            paging(em);
             tx.commit();
 
         } catch (Exception e) {
@@ -38,7 +40,8 @@ public class Main10_1 {
     }
 
     private static void getMemberData(EntityManager em) {
-        String jpql = "select m from MEMBER10_1 as m where m.username like '배유연%'";
+        String jpql = "select m from Member10_1 as m where m.username like '배유연%'";
+
         List<Member10_1> resultList = em.createQuery(jpql, Member10_1.class).getResultList();
         resultList.stream().forEach(a -> System.out.println("member = " + a));
     }
@@ -65,6 +68,14 @@ public class Main10_1 {
         em.persist(member1);
         em.persist(member2);
         em.persist(member3);
+    }
+
+    private static void paging(EntityManager em) {
+        TypedQuery<Member10_1> query = em.createQuery(
+                "SELECT m FROM Member10_1 m ORDER BY m.username DESC", Member10_1.class);
+        query.setFirstResult(10);
+        query.setMaxResults(20);
+        List<Member10_1> resultList = query.getResultList();
     }
 
 

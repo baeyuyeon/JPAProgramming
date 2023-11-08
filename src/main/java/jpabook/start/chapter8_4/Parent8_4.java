@@ -2,7 +2,6 @@ package jpabook.start.chapter8_4;
 
 import java.util.ArrayList;
 import java.util.List;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -15,7 +14,7 @@ public class Parent8_4 {
     @GeneratedValue
     private Long id;
 
-    @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "parent", orphanRemoval = true)
     private List<Child8_4> children = new ArrayList<>();
 
     public Long getId() {

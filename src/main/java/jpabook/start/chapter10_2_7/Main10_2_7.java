@@ -22,7 +22,10 @@ public class Main10_2_7 {
             tx.commit();
             em.clear();
             tx.begin();
-            getMemberData(em);
+            //getMemberData(em);
+            //innerJoinTest(em);
+            //outerJoinTest(em);
+            setaJoin(em);
             tx.commit();
 
         } catch (Exception e) {
@@ -74,4 +77,43 @@ public class Main10_2_7 {
         member3.setTeam(team);
 
     }
+
+    private static void innerJoinTest(EntityManager em) {
+        String teamName = "팀A";
+        String query = "SELECT m FROM Member10_2_7 m INNER JOIN m.team t WHERE t.name = :teamName";
+
+        List<Member10_2_7> members = em.createQuery(query, Member10_2_7.class)
+                .setParameter("teamName", teamName)
+                .getResultList();
+
+        System.out.println("members = " + members);
+    }
+
+    private static void outerJoinTest(EntityManager em) {
+        String query = "SELECT m FROM Member10_2_7 m LEFT OUTER JOIN m.team t";
+
+        List<Member10_2_7> members = em.createQuery(query, Member10_2_7.class)
+                .getResultList();
+
+        System.out.println("members = " + members);
+    }
+
+    private static void setaJoin(EntityManager em) {
+        String query = "SELECT m FROM Member10_2_7 m join m.team t where m.username=t.name";
+
+        List<Member10_2_7> members = em.createQuery(query, Member10_2_7.class)
+                .getResultList();
+
+        System.out.println("members = " + members);
+    }
+
+    private static void useJoinOn(EntityManager em) {
+        String query = "SELECT m FROM Member10_2_7 m join Team10_2_7 t where m.username=t.name";
+
+        List<Member10_2_7> members = em.createQuery(query, Member10_2_7.class)
+                .getResultList();
+
+        System.out.println("members = " + members);
+    }
+
 }

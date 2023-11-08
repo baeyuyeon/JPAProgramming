@@ -18,16 +18,23 @@ public class JpaMain {
 
         try {
             tx.begin();
-            //logic(em);
-            logic2(em);
-            //testSave(em);
-            /*queryLogicJoin(em);
-            updateRelation(em);
+            testSave(em);
+            tx.commit();
+            em.clear();
+
+            tx.begin();
+            logic(em);
+            //tx.commit();
+            //logic2(em);
+
+            //queryLogicJoin(em);
+            /*updateRelation(em);
             deleteRelation(em);*/
             //bindDirection(em);
             //testSaveNonOwner(em);
             //testORM_양방향(em);
             tx.commit();
+
         } catch (Exception e) {
             tx.rollback();
         } finally {
@@ -50,12 +57,14 @@ public class JpaMain {
         member.setAge(20);
 
         //한 건 조회
-        Member findMember = em.find(Member.class, id);
+       /* Member findMember = em.find(Member.class, id);
         System.out.println(
                 "findMember = " + findMember.getUsername() + ", age = " + findMember.getAge());
 
+        System.out.println("----------------------------------------------");*/
         //목록 조회
-        List<Member> members = em.createQuery("select m from Member10_2_7 m", Member.class)
+        List<Member> members = em.createQuery("select m from Member m  join  m.team",
+                        Member.class)
                 .getResultList();
         System.out.println("member.size = " + members.size());
 
