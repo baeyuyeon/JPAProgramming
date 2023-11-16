@@ -46,15 +46,15 @@ public class Team10_2_7 {
         return id;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
     @Override
     public String toString() {
         return "Team10_2_7{" +
                 "id='" + id + '\'' +
                 ", name='" + name + '\'' +
                 '}';
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }

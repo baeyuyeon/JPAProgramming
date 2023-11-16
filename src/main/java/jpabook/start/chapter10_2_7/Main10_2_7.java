@@ -5,6 +5,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.StatelessSession;
 
 public class Main10_2_7 {
 
@@ -22,13 +25,18 @@ public class Main10_2_7 {
             tx.commit();
             em.clear();
             tx.begin();
+
             //getMemberData(em);
-            //innerJoinTest(em);
+            innerJoinTest(em);
             //outerJoinTest(em);
             //setaJoin(em);
             //useJoinOn(em);
             //fetchJoin(em);
-            fetchWrongUse(em);
+            //fetchWrongUse(em);
+            //stateSessionUse(em);
+            //getTeamDTO(em);
+            //fetchJoin2(em);
+            //fetchJoin3(em);
             tx.commit();
 
         } catch (Exception e) {
@@ -106,20 +114,20 @@ public class Main10_2_7 {
 
         System.out.println("members = " + members);*/
 
-        String query2 = "SELECT m FROM Member10_2_7 m inner join m.team t";
+        /*String query2 = "SELECT m FROM Member10_2_7 m inner join m.team t";
 
         List<Member10_2_7> members = em.createQuery(query2, Member10_2_7.class).getResultList();
         for (Member10_2_7 member : members) {
             Team10_2_7 team = member.getTeam();
             String name = team.getName();
             System.out.println("name = " + name);
-        }
+        }*/
 
-        /*String query3 = "SELECT t FROM Team10_2_7 t inner join t.members m";
+        String query3 = "SELECT t FROM Team10_2_7 t inner join t.members m";
 
         List<Team10_2_7> teams = em.createQuery(query3, Team10_2_7.class)
                 .getResultList();
-        for (Team10_2_7 team : teams) {
+        /*for (Team10_2_7 team : teams) {
             List<Member10_2_7> members = team.getMembers();
             System.out.println("members = " + members);
         }*/
@@ -193,4 +201,69 @@ public class Main10_2_7 {
         }
     }
 
+    private static void stateSessionUse(EntityManager em) {
+
+        List<Team10_2_7> teams =
+                em.createQuery("select distinct t from Team10_2_7 t join fetch t.members m "
+                                        + "where m.username='멤버일'",
+                                Team10_2_7.class)
+                        .getResultList(); //넌 사용하지 않을테다.
+
+        Session session = em.unwrap(Session.class);
+        SessionFactory sessionFactory = session.getSessionFactory();
+        List<Team10_2_7> teams2 = session.doReturningWork(connection -> {
+            StatelessSession statelessSession = sessionFactory.openStatelessSession(connection);
+            return statelessSession.createQuery(
+                    "select distinct t from Team10_2_7 t join fetch t.members m "
+                    , Team10_2_7.class).getResultList();
+        });
+
+        for (Team10_2_7 team : teams2) {
+            System.out.println("team.getMembers() = " + team.getMembers());
+        }
+    }
+
+    private static void getTeamDTO(EntityManager em) {
+        List<Team10_2_7> teams =
+                em.createQuery("select distinct t from Team10_2_7 t join fetch t.members m "
+                                        + "where m.username='멤버일'",
+                                Team10_2_7.class)
+                        .getResultList(); //넌 사용하지 않을테다.
+
+        List<TeamDTO> teams2 =
+                em.createQuery(
+                                "select new jpabook.start.chapter10_2_7.TeamDTO(t.id, t.name, m.id, m.username) from Team10_2_7 t join t.members m "
+                                , TeamDTO.class)
+                        .getResultList();
+
+        for (TeamDTO team : teams2) {
+            System.out.println("teams2 = " + teams2);
+        }
+    }
+
+    private static void fetchJoin2(EntityManager em) {
+        String query = "select m from Member10_2_7 m join fetch m.team";
+
+        List<Member10_2_7> members = em.createQuery(query, Member10_2_7.class)
+                .getResultList();
+
+        for (Member10_2_7 member : members) {
+            System.out.println("member = " + member);
+        }
+    }
+
+    private static void fetchJoin3(EntityManager em) {
+        String query = "select t from Team10_2_7 t join fetch t.members where t.name='팀A'";
+
+        List<Team10_2_7> teams = em.createQuery(query, Team10_2_7.class)
+                .getResultList();
+
+        for (Team10_2_7 team : teams) {
+            System.out.println("team = " + team);
+            List<Member10_2_7> members = team.getMembers();
+            System.out.println("members = " + members);
+            System.out.println("------------------------------------");
+        }
+
+    }
 }
