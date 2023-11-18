@@ -27,9 +27,9 @@ public class Main10_2_7 {
             tx.begin();
 
             //getMemberData(em);
-            innerJoinTest(em);
+            //innerJoinTest(em);
             //outerJoinTest(em);
-            //setaJoin(em);
+            setaJoin(em);
             //useJoinOn(em);
             //fetchJoin(em);
             //fetchWrongUse(em);
@@ -149,7 +149,7 @@ public class Main10_2_7 {
     }
 
     private static void setaJoin(EntityManager em) {
-        String query = "SELECT m FROM Member10_2_7 m join m.team t where m.username=t.name";
+        String query = "SELECT count(m) FROM Member10_2_7 m , Team10_2_7 t where m.username=t.name";
 
         List<Member10_2_7> members = em.createQuery(query, Member10_2_7.class)
                 .getResultList();
