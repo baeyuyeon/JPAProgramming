@@ -14,6 +14,9 @@ public class Member10_3_1 {
     private String id;
     private String username;
 
+    private int age;
+
+
     @ManyToOne
     @JoinColumn(name = "TEAM_ID")
     private Team10_3_1 team;
@@ -21,9 +24,10 @@ public class Member10_3_1 {
     public Member10_3_1() {
     }
 
-    public Member10_3_1(String id, String username) {
+    public Member10_3_1(String id, String username, int age) {
         this.id = id;
         this.username = username;
+        this.age = age;
     }
 
     public String getId() {
@@ -48,6 +52,14 @@ public class Member10_3_1 {
 
     public void setTeam(Team10_3_1 team) {
         this.team = team;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
     }
 
     @Override
